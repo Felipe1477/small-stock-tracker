@@ -1,0 +1,24 @@
+<div class="card">
+    <div class="card-body">
+        <h3>Enter the symbol of a stock to track (i.e. AAPL, TSLA, GOOGL)</h3>
+
+        <input #stockFiltered>
+        <button type="button" (click)="displayStock(stockFiltered.value)">Track Stock</button>
+    </div>
+
+
+</div>
+
+<ul id="listaStock">
+    <li *ngFor="let stock of stocks.slice().reverse()">
+        <div class="card card-small" >
+            {{stock.description}} ( {{stock.symbol}} )
+            <br>
+            Change Today: {{stock.data.d | percent}}
+            Opening Price: {{stock.data.o | currency : 'USD'}}
+            <br>
+            Current Price: {{stock.data.c | currency : 'USD'}}
+            High Price: {{stock.data.h | currency : 'USD'}}
+          </div>
+    </li>
+</ul>

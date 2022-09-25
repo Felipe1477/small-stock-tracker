@@ -1,0 +1,29 @@
+.card {
+    all: unset;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    background-color: #fafafa;
+    height: 100px;
+    width: 100%;
+    margin: 0 8px 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    line-height: 24px;
+}
+
+.card input {
+    margin: 0 16px 16px;
+}
+
+#lista1 li {
+    display: inline;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.card.card-small {
+    height: 48px;
+    width: 336px;
+}
