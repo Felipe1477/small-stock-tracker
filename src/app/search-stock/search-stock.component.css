@@ -24,6 +24,10 @@
 }
 
 .card.card-small {
-    height: 48px;
-    width: 400px;
+    height: 120px;
+    width: 600px;
+}
+
+.removedot {
+    list-style:none;
 }

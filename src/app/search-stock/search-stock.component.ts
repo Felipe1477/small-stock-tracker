@@ -10,19 +10,20 @@ import { SearchStockService } from './search-stock.service';
 })
 export class SearchStockComponent implements OnInit {
 
-  stocks : company[] = [];
-  companies? : company[];
+  stocks: company[] = [];
+  companies?: company[];
   errorMessage: string = '';
+  addstocks = true;
 
 
   constructor(private searchstockservice: SearchStockService,
-              private router: Router) { }
+    private router: Router) { }
 
   ngOnInit(): void {
-    this.searchstockservice.getCompany().subscribe( {
+    this.searchstockservice.getCompany().subscribe({
       next: company => {
         this.companies = company;
-        this.searchstockservice.getCompanyData(this.companies).subscribe( {
+        this.searchstockservice.getCompanyData(this.companies).subscribe({
           next: company => {
             this.companies = company;
             console.log(this.companies);
@@ -32,21 +33,35 @@ export class SearchStockComponent implements OnInit {
       },
       error: err => this.errorMessage = err
     })
-    
+
   }
 
 
   displayStock(stockFiltered: string) {
+    this.addstocks = true;
     this.companies?.map(company => {
       if (company.symbol == stockFiltered) {
+        this.stocks.forEach((element, index) => {
+          if (element.symbol == stockFiltered && this.stocks) this.addstocks = false;
+        });
+        if (this.addstocks){
         this.stocks.push(company);
-      } 
-    })  
+        }
+      }
+    })
   }
 
-  goSentimentDetails(symbolselect: string){
+  goSentimentDetails(symbolselect: string) {
     //this.router.navigate(['/sentiment', {symbol: symbolselect}])
-    this.router.navigate([`sentiment/${symbolselect}` ]);
+    this.router.navigate([`sentiment/${symbolselect}`]);
+  }
+
+  onCloseClick(symbolremove: string) {
+    if (this.stocks) {
+      this.stocks.forEach((element, index) => {
+        if (element.symbol == symbolremove && this.stocks) this.stocks.splice(index, 1);
+      });
+    }
   }
 
 }

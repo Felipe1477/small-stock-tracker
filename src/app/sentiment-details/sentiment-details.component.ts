@@ -4,6 +4,21 @@ import { Location } from '@angular/common';
 import { insidersentiment } from '../shared/insidersentiment.model';
 import { SentimentDetailsService } from './sentiment-details.service';
 
+export enum MonthList{
+  January = 1,
+  February,
+  March,
+  April,
+  May,
+  June,
+  July,
+  August,
+  September,
+  October,
+  November,
+  December
+};
+
 @Component({
   selector: 'app-sentiment-details',
   templateUrl: './sentiment-details.component.html',
@@ -14,6 +29,7 @@ export class SentimentDetailsComponent implements OnInit {
   symbol: string = '';
   SentimentSelected: insidersentiment[] = [];
   errorMessage: string = '';
+  monthList = MonthList;
 
   constructor(private route: ActivatedRoute, private sentimentservice: SentimentDetailsService, private location: Location) { 
    }
@@ -30,7 +46,8 @@ export class SentimentDetailsComponent implements OnInit {
     })
   }
 
-  goBack():void {
+  goBack(event: Event):void {
+    console.log(event);
     this.SentimentSelected = [];
     this.location.back()
   }

@@ -1,26 +1,30 @@
-<p>sentiment-details works! {{symbol}}</p>
-<div class="card">
-    <li *ngFor="let sentiment of SentimentSelected">
-
-        {{sentiment.symbol}}
-        <br>
-        {{sentiment.month}}
-        <br>
-        Change: {{sentiment.change}}
-        <br>
-        Change: {{sentiment.mspr}}
-        <br>
-
-        <div *ngIf="sentiment.mspr > 0; else elseBlock">
-            <p>&#11181;</p>
-        </div>
-        <ng-template #elseBlock>
-            <p>&#11183;</p>
-        </ng-template>
-
-
-    </li>
-
+<div class="container">
+    <div class="row">
+        <ul id="listaStock">
+            <div class="col-md-3 mx-auto my-5" *ngFor="let sentiment of SentimentSelected">
+                <div>
+                    <ul>
+                        {{sentiment.symbol}}
+                        <br>
+                        {{monthList[sentiment.month]}}
+                        <br>
+                        Change: {{sentiment.change}}
+                        <br>
+                        Change: {{sentiment.mspr}}
+                        <br>
+                    </ul>
+                    <ul>
+                        <div *ngIf="sentiment.mspr > 0; else elseBlock">
+                            <p>&#11181;</p>
+                        </div>
+                        <ng-template #elseBlock>
+                            <p>&#11183;</p>
+                        </ng-template>
+                    </ul>
+                </div>
+            </div>
+        </ul>
+    </div>
 </div>
 
-<button type="button" (click)="goBack()">Go to social sentiment details ></button>
+<button id="backBtn" type="button" (click)="goBack($event)">Go to social sentiment details ></button>

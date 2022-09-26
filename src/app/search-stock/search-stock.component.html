@@ -1,32 +1,44 @@
 <div class="card">
     <div class="card-body">
         <h3>Enter the symbol of a stock to track (i.e. AAPL, TSLA, GOOGL)</h3>
-
-        <input #stockFiltered>
-        <button type="button" (click)="displayStock(stockFiltered.value)">Track Stock</button>
+        <input #stockInput>
+        <button id="trackBtn" type="button" (click)="displayStock(stockInput.value)">Track Stock</button>
     </div>
-
-
 </div>
 
 <ul id="listaStock">
     <li *ngFor="let stock of stocks.slice().reverse()">
         <div class="card card-small">
-            {{stock.description}} ( {{stock.symbol}} )
-            <br>
-            Change Today: {{stock.data.d | percent}}
-            Opening Price: {{stock.data.o | currency : 'USD'}}
-            <br>
-            Current Price: {{stock.data.c | currency : 'USD'}}
-            High Price: {{stock.data.h | currency : 'USD'}}
+            <ul>
+                <li>
+                    <h1>{{stock.description}} ( {{stock.symbol}} )</h1>
 
-            <div *ngIf="stock.data.d > 0; else elseBlock">
-                <p>&#11181;</p>
-            </div>
-            <ng-template #elseBlock>
-                <p>&#11183;</p>
-            </ng-template>
-            <button type="button" (click)="goSentimentDetails(stock.symbol)">Go to social sentiment details ></button>
+                </li>
+                <li>
+                    Change Today: {{stock.data.d | percent}}
+                    Opening Price: {{stock.data.o | currency : 'USD'}}
+                </li>
+                <li>
+                    Current Price: {{stock.data.c | currency : 'USD'}}
+                    High Price: {{stock.data.h | currency : 'USD'}}
+                </li>
+                <li class="removedot">
+                    <button id="sentiment{{stock.symbol}}" type="button" (click)="goSentimentDetails(stock.symbol)">Go
+                        to social
+                        sentiment details ></button>
+                </li>
+            </ul>
+            <ul>
+                <div *ngIf="stock.data.d > 0; else elseBlock">
+                    <p style="font-size: 100px">&#11181;</p>
+                </div>
+                <ng-template #elseBlock>
+                    <p style="font-size: 100px">&#11183;</p>
+                </ng-template>
+            </ul>
+            <ul>
+                <button id="remove{{stock.symbol}}" type="button" (click)="onCloseClick(stock.symbol)">X</button>
+            </ul>
         </div>
     </li>
 </ul>
