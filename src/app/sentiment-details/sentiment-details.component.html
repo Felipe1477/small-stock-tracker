@@ -1,0 +1,26 @@
+<p>sentiment-details works! {{symbol}}</p>
+<div class="card">
+    <li *ngFor="let sentiment of SentimentSelected">
+
+        {{sentiment.symbol}}
+        <br>
+        {{sentiment.month}}
+        <br>
+        Change: {{sentiment.change}}
+        <br>
+        Change: {{sentiment.mspr}}
+        <br>
+
+        <div *ngIf="sentiment.mspr > 0; else elseBlock">
+            <p>&#11181;</p>
+        </div>
+        <ng-template #elseBlock>
+            <p>&#11183;</p>
+        </ng-template>
+
+
+    </li>
+
+</div>
+
+<button type="button" (click)="goBack()">Go to social sentiment details ></button>

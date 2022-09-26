@@ -5,11 +5,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SearchStockComponent } from './search-stock/search-stock.component';
+import { SentimentDetailsComponent } from './sentiment-details/sentiment-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchStockComponent
+    SearchStockComponent,
+    SentimentDetailsComponent
   ],
   imports: [
     BrowserModule,

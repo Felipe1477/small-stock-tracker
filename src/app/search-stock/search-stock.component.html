@@ -11,7 +11,7 @@
 
 <ul id="listaStock">
     <li *ngFor="let stock of stocks.slice().reverse()">
-        <div class="card card-small" >
+        <div class="card card-small">
             {{stock.description}} ( {{stock.symbol}} )
             <br>
             Change Today: {{stock.data.d | percent}}
@@ -19,6 +19,14 @@
             <br>
             Current Price: {{stock.data.c | currency : 'USD'}}
             High Price: {{stock.data.h | currency : 'USD'}}
-          </div>
+
+            <div *ngIf="stock.data.d > 0; else elseBlock">
+                <p>&#11181;</p>
+            </div>
+            <ng-template #elseBlock>
+                <p>&#11183;</p>
+            </ng-template>
+            <button type="button" (click)="goSentimentDetails(stock.symbol)">Go to social sentiment details ></button>
+        </div>
     </li>
 </ul>

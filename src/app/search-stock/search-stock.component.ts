@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { company } from '../shared/company.model';
 import { SearchStockService } from './search-stock.service';
 
@@ -14,7 +15,8 @@ export class SearchStockComponent implements OnInit {
   errorMessage: string = '';
 
 
-  constructor(private searchstockservice: SearchStockService) { }
+  constructor(private searchstockservice: SearchStockService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.searchstockservice.getCompany().subscribe( {
@@ -39,8 +41,12 @@ export class SearchStockComponent implements OnInit {
       if (company.symbol == stockFiltered) {
         this.stocks.push(company);
       } 
-    })
-      
+    })  
+  }
+
+  goSentimentDetails(symbolselect: string){
+    //this.router.navigate(['/sentiment', {symbol: symbolselect}])
+    this.router.navigate([`sentiment/${symbolselect}` ]);
   }
 
 }
