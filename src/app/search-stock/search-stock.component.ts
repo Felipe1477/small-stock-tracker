@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { company } from '../shared/company.model';
 import { SearchStockService } from './search-stock.service';
 
@@ -16,15 +17,19 @@ export class SearchStockComponent implements OnInit {
   addstocks = true;
   addStocksInit = false;
 
+  subscription1$?: Subscription;
+  subscription2$?: Subscription;
+  subscriptions: Subscription[] = [];
+
 
   constructor(private searchstockservice: SearchStockService,
     private router: Router) { }
 
   ngOnInit(): void {
-    this.searchstockservice.getCompany().subscribe({
+    this.subscription1$ = this.searchstockservice.getCompany().subscribe({
       next: company => {
         this.companies = company;
-        this.searchstockservice.getCompanyData(this.companies).subscribe({
+        this.subscription2$ = this.searchstockservice.getCompanyData(this.companies).subscribe({
           next: company => {
             this.companies = company;
             console.log(this.companies);
@@ -38,7 +43,14 @@ export class SearchStockComponent implements OnInit {
       },
       error: err => this.errorMessage = err
     })
+    if (this.subscription1$ && this.subscription2$) {
+      this.subscriptions.push(this.subscription1$)
+      this.subscriptions.push(this.subscription2$)
+    }
+  }
 
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
 
