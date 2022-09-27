@@ -1,29 +1,25 @@
 <div class="container">
     <div class="row">
-        <ul id="listaStock">
-            <div class="col-md-3 mx-auto my-5" *ngFor="let sentiment of SentimentSelected">
-                <div>
-                    <ul>
-                        {{sentiment.symbol}}
-                        <br>
-                        {{monthList[sentiment.month]}}
-                        <br>
-                        Change: {{sentiment.change}}
-                        <br>
-                        Change: {{sentiment.mspr}}
-                        <br>
-                    </ul>
-                    <ul>
-                        <div *ngIf="sentiment.mspr > 0; else elseBlock">
-                            <p>&#11181;</p>
-                        </div>
-                        <ng-template #elseBlock>
-                            <p>&#11183;</p>
-                        </ng-template>
-                    </ul>
-                </div>
+        <h1>{{companyName}} ( {{symbol}} )</h1>
+        <th *ngFor="let sentiment of SentimentSelected">
+            <div class="container">
+                <th>
+                    {{monthList[sentiment.month]}}
+                    <br>
+                    Change: {{sentiment.change}}
+                    <br>
+                    Change: {{sentiment.mspr | number : '1.0-2'}}
+                </th>
+                <th>
+                    <div *ngIf="sentiment.mspr > 0; else elseBlock">
+                        <p class="green-arrow">&#11181;</p>
+                    </div>
+                    <ng-template #elseBlock>
+                        <p class="red-arrow">&#11183;</p>
+                    </ng-template>
+                </th>
             </div>
-        </ul>
+        </th>
     </div>
 </div>
 

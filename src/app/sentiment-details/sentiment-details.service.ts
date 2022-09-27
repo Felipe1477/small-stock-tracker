@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
+import { company } from '../shared/company.model';
 import { insidersentiment } from '../shared/insidersentiment.model';
 
 export interface symbolsentiment {
@@ -15,8 +16,10 @@ export class SentimentDetailsService {
 
   symbolSentimentSelected?: symbolsentiment;
   SentimentSelected: insidersentiment[] = [];
+  companyName: string = '';
 
   private insidersentiment = 'api/insidersentiment-details.json';
+  private companyUrl = 'api/company-details.json';
 
   constructor(private http: HttpClient) { }
 
@@ -46,5 +49,22 @@ export class SentimentDetailsService {
       catchError(() => of([]))
     );
   }
+
+  getCompanyName(symbol: string): Observable<string> {
+    return this.http.get<company[]>(this.companyUrl).pipe(
+      map(companyData => {
+        for (let i = 0; i < companyData.length; i++) {
+            if (companyData[i].symbol == symbol) {
+              this.companyName = companyData[i].description;
+            }
+        }
+        return this.companyName;
+      }
+      ),
+      catchError(() => of(''))
+    );
+  }
+
+
 
 }

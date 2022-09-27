@@ -12,8 +12,10 @@ export class SearchStockService {
   companyData: company[] = [];
   company?: company;
   quote?: quote;
-  private companyUrl = 'api/company-details.json';
+  companySelected: string[] = [];
+
   private companyDataUrl = 'api/quote-details.json';
+  private companyUrl = 'api/company-details.json';
 
   constructor(private http: HttpClient) { }
 

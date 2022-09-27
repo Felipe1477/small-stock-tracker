@@ -14,6 +14,7 @@ export class SearchStockComponent implements OnInit {
   companies?: company[];
   errorMessage: string = '';
   addstocks = true;
+  addStocksInit = false;
 
 
   constructor(private searchstockservice: SearchStockService,
@@ -27,6 +28,10 @@ export class SearchStockComponent implements OnInit {
           next: company => {
             this.companies = company;
             console.log(this.companies);
+            for (let i = 0; i < this.searchstockservice.companySelected.length; i++) {
+              this.displayStock(this.searchstockservice.companySelected[i])
+            }
+            this.addStocksInit = true;
           },
           error: err => this.errorMessage = err
         })
@@ -44,8 +49,11 @@ export class SearchStockComponent implements OnInit {
         this.stocks.forEach((element, index) => {
           if (element.symbol == stockFiltered && this.stocks) this.addstocks = false;
         });
-        if (this.addstocks){
-        this.stocks.push(company);
+        if (this.addstocks) {
+          this.stocks.push(company);
+          if (this.addStocksInit) {
+            this.searchstockservice.companySelected.push(stockFiltered);
+          }
         }
       }
     })
@@ -60,6 +68,9 @@ export class SearchStockComponent implements OnInit {
     if (this.stocks) {
       this.stocks.forEach((element, index) => {
         if (element.symbol == symbolremove && this.stocks) this.stocks.splice(index, 1);
+      });
+      this.searchstockservice.companySelected.forEach((element, index) => {
+        if (element == symbolremove) this.searchstockservice.companySelected.splice(index, 1);
       });
     }
   }

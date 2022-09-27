@@ -1,5 +1,13 @@
-#lista1 li {
-    display: inline;
-    padding-left: 3px;
-    padding-right: 3px;
+.green-arrow {
+    font-size: 50px;
+    color: green;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.red-arrow {
+    font-size: 50px;
+    color: red;
+    margin-left: 10px;
+    margin-right: 10px;
 }

@@ -27,11 +27,13 @@ export enum MonthList{
 export class SentimentDetailsComponent implements OnInit {
   
   symbol: string = '';
+  companyName: string = '';
   SentimentSelected: insidersentiment[] = [];
   errorMessage: string = '';
   monthList = MonthList;
 
-  constructor(private route: ActivatedRoute, private sentimentservice: SentimentDetailsService, private location: Location) { 
+  constructor(private route: ActivatedRoute, private sentimentservice: SentimentDetailsService, 
+    private location: Location) { 
    }
 
   ngOnInit(): void {
@@ -41,6 +43,12 @@ export class SentimentDetailsComponent implements OnInit {
       next: sentiment => {
         this.SentimentSelected = [];
         this.SentimentSelected = sentiment;
+      },
+      error: err => this.errorMessage = err
+    })
+    this.sentimentservice.getCompanyName(this.symbol).subscribe( {
+      next: companyName => {
+        this.companyName = companyName;
       },
       error: err => this.errorMessage = err
     })
